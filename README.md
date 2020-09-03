@@ -11,8 +11,10 @@
 
 ### Usuário
 
-- O sistema tem como objetivo o cadastramento de ocorrencias relacionados a uma Ong. Primeiramente deve-se cadastrar uma Ong, caso já não tenha sido cadastrada. O sistema retornará o Id da Ong que deve ser utilizado como chave para acessar o serviço. 
-Uma vez logado como Ong é possível adicionar novos casos relacionados a Ong em questão, tendo como campos o nome do caso, a descrição e o seu valor. Após o caso ter sido respondido, o gerenciador da Ong pode deletá-lo.
+- O sistema tem como objetivo o cadastramento de ocorrencias relacionados a uma Ong. 
+- Primeiramente deve-se cadastrar uma Ong, caso já não tenha sido cadastrada. O sistema retornará o Id da Ong que deve ser utilizado como chave para acessar o serviço. 
+- Uma vez logado como Ong é possível adicionar novos casos relacionados a Ong em questão, tendo como campos o nome do caso, a descrição e o seu valor.
+- Após o caso ter sido respondido, o gerenciador da Ong pode deletá-lo.
 
 ### Desenvolvedor
 
@@ -24,3 +26,4 @@ Além disso o sistema faz acesso ao banco de dados através de um drive de banco
 
 ## Arquitetura
 
+![diagram](https://github.com/mcesarpl/DADProject/blob/master/doc/images/Diagram.png)
