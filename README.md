@@ -31,7 +31,7 @@ Além disso o sistema faz acesso ao banco de dados através de um drive de banco
 
 ## Demo
 
-- Aplicação (login "admin", senha "_RT9fH")\
+- Aplicação\
 http://137.117.85.184/
 
 - Servidor de banco de dados e backend REST\
