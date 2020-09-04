@@ -7,7 +7,7 @@ import './global.css';
 
 function App() {
   return (
-    <Header title="Semana OmniStack"/>,
+    <Header title="Sistema de Atendimento de Chamados"/>,
     <Routes />
   );
 }

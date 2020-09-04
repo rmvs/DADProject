@@ -11,21 +11,28 @@ import logoImg from "../../assets/logo.svg";
 
 export default function Logon () {
 
-    const [id, setId] = useState('');
+    const [login, setLogin] = useState('');
+    const [senha, setSenha] = useState('');
     const history = useHistory();
 
     async function handleLogin (event) {
         event.preventDefault();
         try {
-            let response = await api.post('sessions', {id});
-
-            localStorage.setItem('ongId', id);
-            localStorage.setItem('ongName', response.data.name);
+            let response = await api.post('users/login', {login, senha});
+            if(response.data.erro){
+                alert(response.data.erro)
+                return;
+            }
+            const { id,nome,email } = response.data
+            console.log(id,nome,email)
+            localStorage.setItem('id', id);
+            localStorage.setItem('name', nome);
+            localStorage.setItem('email', email)
 
             history.push('/profile');
 
         } catch (err) {
-            alert('Id de login inválido. Tente novamente.');
+            alert("Usuário não encontrado");
         }
     }
 
@@ -34,13 +41,20 @@ export default function Logon () {
             <section className="form">
                 <img src={logoImg} alt="Be the Hero"/>
                 <form onSubmit={handleLogin}>
-                    <h1>Faça seu logon</h1>
+                    <h1>Faça seu login</h1>
 
                     <input 
                         type="text" 
-                        placeholder="Sua ID"
-                        value={id}
-                        onChange = {e=>setId(e.target.value)}
+                        placeholder="Seu login"
+                        value={login}
+                        onChange = {e=>setLogin(e.target.value)}
+                    />
+
+                    <input 
+                        type="password" 
+                        placeholder="Sua senha"
+                        value={senha}
+                        onChange = {e=>setSenha(e.target.value)}
                     />
 
                     <button className="button" type="submit">Entrar</button>

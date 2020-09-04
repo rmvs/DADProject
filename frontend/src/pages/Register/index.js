@@ -9,11 +9,10 @@ import api from '../../services/api';
 
 export default function Register () {
 
- const [name, setName] = useState('');
+ const [nome, setNome] = useState('');
  const [email, setEmail] = useState('');
- const [whatsapp, setWhatsapp] = useState('');
- const [city, setCity] = useState('');
- const [uf, setUf] = useState('');
+ const [login, setLogin] = useState('');
+ const [senha, setSenha] = useState('');
 
  const history = useHistory();
 
@@ -22,11 +21,10 @@ export default function Register () {
     event.preventDefault();// unable reload page at submit form
 
     const data = {
-        name,
+        nome,
         email,
-        whatsapp,
-        city,
-        uf
+        login,
+        senha,
     }
 
     try {
@@ -55,9 +53,9 @@ export default function Register () {
              </section>
              <form onSubmit={handleRegister}>
                  <input 
-                    placeholder="Nome da Ong"
-                    value={name}
-                    onChange={e => setName(e.target.value)}
+                    placeholder="Seu nome"
+                    value={nome}
+                    onChange={e => setNome(e.target.value)}
                  />
 
                  <input 
@@ -66,23 +64,17 @@ export default function Register () {
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                  />
-
                  <input 
-                    placeholder="WhatsApp"
-                    value={whatsapp}
-                    onChange={ e=> setWhatsapp(e.target.value)}
+                    placeholder="Login"
+                    value={login}
+                    onChange={ e=> setLogin(e.target.value)}
                  />
                  <div className="input-group">
                      <input 
-                        placeholder="Cidade"
-                        value={city}
-                        onChange={e => setCity(e.target.value)}
-                    />
-                     <input 
-                        placeholder="UF" 
-                        style={{width: 80}}
-                        value={uf}
-                        onChange={e => setUf(e.target.value)}
+                        type="password"
+                        placeholder="Senha"
+                        value={senha}
+                        onChange={e => setSenha(e.target.value)}
                     />
                  </div>
 

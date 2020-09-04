@@ -1,4 +1,8 @@
-connection = require('../database/connection');
+const { Pool } = require('pg');
+
+// connection = require('../database/connection');
+
+const pool = require('../database/connection');
 
 module.exports = {
     //listagem dos incidentes paginada de 5 em 5 incidentes
@@ -9,28 +13,40 @@ module.exports = {
         const [count] = await connection('incidents').count();
 
         //pesquisa paginada no banco de dados
-        const incidents = await connection('incidents')
-        .join('ongs','ongs.id', '=', 'incidents.ong_id')
-        .limit(5)
-        .offset((page - 1) * 5)
-        .select(['incidents.*', 'ongs.name', 'ongs.email', 'ongs.whatsapp', 'ongs.city', 'ongs.uf']);
+        // const incidents = await connection('incidents')
+        // .join('ongs','ongs.id', '=', 'incidents.ong_id')
+        // .limit(5)
+        // .offset((page - 1) * 5)
+        // .select(['incidents.*', 'ongs.name', 'ongs.email', 'ongs.whatsapp', 'ongs.city', 'ongs.uf']);
         
+        const { rows } = await pool.query("select * from chamados c inner join user_chamado uc on uc.id = c.userid ")
+
+        var incidents = []
+
+        rows.forEach({
+
+        })
+
         //retorno do numero de incidentes para o header de resposta 
-        res.header('X-Total-Count', count['count(*)']);
+        res.header('X-Total-Count', incidents.length);
 
         //retorno dos incidentes de acordo com a paginação
         return res.json( incidents );
     },
 
     async create (req, res) {
-        const { title, description, value } = req.body;
+        const { title, description, value,file } = req.body;
         const ong_id = req.headers.authorization;
 
-        const [id] = await connection('incidents').insert({
-            title, description, value, ong_id
-        });
+        console.log(req.files)
+        console.log(file)
 
-        res.json({ id });
+        // const [id] = await connection('incidents').insert({
+        //     title, description, value, ong_id
+        // });
+
+        // res.json({ id });
+        res.json({'id':0})
     },
 
     async delete(req, res) {

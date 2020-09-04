@@ -10,31 +10,32 @@ export default function Profile () {
     let [incidents, setIncidents] = useState([]);
     let history = useHistory();
 
-    let ongName  = localStorage.getItem('ongName');
-    let ongId = localStorage.getItem('ongId');
+    let nome  = localStorage.getItem('nome');
+    let email = localStorage.getItem('email');
+    let id = localStorage.getItem('id')
 
     useEffect( () => {
         api.get('/profile', {
             headers: {
-                Authorization: ongId
+                Authorization: id
             }
         }).then(response => {
+            console.log(response.data)
             setIncidents(response.data);
         });
-    }, [ongId]);
+    }, [id]);
 
     async function handleDeleteIncident (id) {
         try {
             await api.delete(`incidents/${id}`,{
                 headers: {
-                    Authorization: ongId
+                    Authorization: id
                 }
             });
-
             setIncidents(incidents.filter(incident => incident.id !== id));
 
         } catch (err) {
-            alert('Erro ao deletar caso, tente novamente.');
+            alert('Erro ao deletar chamado, tente novamente.');
         }
     }
 
@@ -48,14 +49,14 @@ export default function Profile () {
         <div className="profile-container">
             <header>
                 <img src={logoImg} alt="Be the Hero"/>
-                <span>Bem vinda, {ongName}</span>
-                <Link className="button" to="/incidents/new">Cadastrar novo caso</Link>
+                <span>Bem vindo(a), {nome}</span>
+                <Link className="button" to="/incidents/new">Cadastrar novo chamado</Link>
                 <button type="button" onClick={handleLogout}>
                     <FiPower size={18} color="#E02041"/>
                 </button>
             </header>
 
-            <h1>Casos Cadastrados</h1>
+            <h1>Chamados Cadastrados</h1>
 
             <ul>
                 {

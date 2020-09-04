@@ -12,6 +12,7 @@ export default function NewIncident() {
     let [title, setTitle] = useState('');
     let [description, setDescription] = useState('');
     let [value, setValue] = useState('');
+    let [file, setFile] = useState('');
 
     let ongId = localStorage.getItem('ongId');
     let history = useHistory();
@@ -22,12 +23,17 @@ export default function NewIncident() {
         let data = {
             title,
             description,
-            value
+            value,
+            file
         };
 
         try {
-
-            await api.post('incidents', data, {
+            const formData = new FormData();
+            formData.append("file",data.file);
+            formData.append("tile",data.title);
+            formData.append("description",data.description);
+            formData.append("value",value)
+            await api.post('incidents', formData, {
                 headers: {
                     Authorization: ongId
                 }
@@ -45,8 +51,8 @@ export default function NewIncident() {
          <div className="content">
              <section>
                 <img src={logoImg} alt="Be The Hero"/>
-                <h1>Cadastrar novo caso</h1>
-                <p>Descreva o caso detalhadamente para encontrar um héroi para resolver isso.</p>
+                <h1>Cadastrar novo chamado</h1>
+                <p>Descreva o chamado detalhadamente. Você pode anexar um print.</p>
                 <Link className="back-link" to="/profile">
                     <FiArrowLeft size={16} color="#E02041" />
                     Voltar para Home
@@ -54,9 +60,18 @@ export default function NewIncident() {
              </section>
              <form onSubmit={handleNewIncident}>
                  <input 
-                    placeholder="Título do caso"
+                    placeholder="Título do chamado"
                     value={title}
                     onChange={event => setTitle(event.target.value)}
+                />
+                <input
+                    id="fil"
+                    type="file"
+                    placeholder="Screenshot"
+                    onChange={event => {
+                        setFile(event.target.files[0])
+                        console.log(event.target.files)
+                    }}
                 />
                  <textarea 
                     placeholder="Descrição"

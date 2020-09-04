@@ -4,8 +4,11 @@ const OngController = require('./controllers/OngController');
 const IncidentController = require('./controllers/IncidentController');
 const ProfileController = require('./controllers/ProfileController');
 const SessionController = require('./controllers/SessionController');
+const UsersController = require('./controllers/UsersController');
 
 const routes = express.Router();
+
+const upload = require('./storage-engine')
 
 routes.get('/', (req, res) => {
     res.json({
@@ -59,7 +62,7 @@ routes.post('/ongs', OngController.create);
 routes.get('/incidents', IncidentController.index);
 
 //Create Incident
-routes.post('/incidents', IncidentController.create);
+routes.post('/incidents',upload.any(), IncidentController.create);
 
 //Delete Incident
 routes.delete('/incidents/:id', IncidentController.delete);
@@ -69,5 +72,9 @@ routes.get('/profile', ProfileController.index);
 
 //Create Session Login
 routes.post('/sessions', SessionController.create);
+
+routes.post('/users', UsersController.create);
+
+routes.post('/users/login', UsersController.login)
 
 module.exports = routes;
