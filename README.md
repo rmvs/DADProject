@@ -31,8 +31,8 @@ Além disso o sistema faz acesso ao banco de dados através de um drive de banco
 
 ## Demo
 
-- Aplicação (login "admin", senha "_RT9fH")
+- Aplicação (login "admin", senha "_RT9fH")\
 http://137.117.85.184/
 
-- Servidor
+- Servidor\
 http://104.45.148.219/
