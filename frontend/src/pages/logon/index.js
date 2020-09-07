@@ -23,9 +23,10 @@ export default function Logon () {
                 alert(response.data.erro)
                 return;
             }
-            const { id,nome,email } = response.data
+            const { id,pessoaid,nome,email } = response.data
             console.log(id,nome,email)
             localStorage.setItem('id', id);
+            localStorage.setItem('pessoaid',pessoaid);
             localStorage.setItem('name', nome);
             localStorage.setItem('email', email)
 

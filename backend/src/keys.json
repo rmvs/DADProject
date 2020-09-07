@@ -1,0 +1,11 @@
+{
+    "connectionString": "DefaultEndpointsProtocol=https;AccountName=vmdad2020groupdiag;AccountKey=Y3plcJDLO7p5mfTA7US741/5aFruXlaVQZCN1jPRDLf4XHPqI0AbGlkH7MXEgUkc/2P94q/g2GA1Zj9Ks6en0Q==;EndpointSuffix=core.windows.net",
+    "accessKey": "Y3plcJDLO7p5mfTA7US741/5aFruXlaVQZCN1jPRDLf4XHPqI0AbGlkH7MXEgUkc/2P94q/g2GA1Zj9Ks6en0Q==",
+    "accountName": "vmdad2020groupdiag",
+    "containerName": "documentos",
+    "hostDB": "localhost",
+    "userDB": "postgres",
+    "passwordDB": "postgres",
+    "portDB": "5432",
+    "nameDB": "postgres"
+}

@@ -13,6 +13,7 @@ export default function Register () {
  const [email, setEmail] = useState('');
  const [login, setLogin] = useState('');
  const [senha, setSenha] = useState('');
+ const [ongnome,setOngNome] = useState('');
 
  const history = useHistory();
 
@@ -25,12 +26,13 @@ export default function Register () {
         email,
         login,
         senha,
+        ongnome
     }
 
     try {
-        let response = await api.post('ongs', data);
+        let response = await api.post('users/', data);        
 
-        alert(`Seu ID de acesso: ${response.data.id}`);
+        alert("Seu cadastro foi criado com sucesso!");
 
         history.push('/');
         
@@ -48,7 +50,7 @@ export default function Register () {
                 <p>Faça seu cadastro, entre na plataforma e ajude pessoas a encontrarem os casos da sua ONG.</p>
                 <Link className="back-link" to="/">
                     <FiArrowLeft size={16} color="#E02041" />
-                    Não tenho cadastro
+                    Já tenho cadastro
                 </Link>
              </section>
              <form onSubmit={handleRegister}>
@@ -56,18 +58,29 @@ export default function Register () {
                     placeholder="Seu nome"
                     value={nome}
                     onChange={e => setNome(e.target.value)}
+                    required={true}
                  />
+
+                <input 
+                    placeholder="Nome da sua ONG"
+                    value={ongnome}
+                    onChange={e => setOngNome(e.target.value)}
+                    required={true}
+                 />
+
 
                  <input 
                     type="email" 
                     placeholder="E-mail"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
+                    required={true}
                  />
                  <input 
                     placeholder="Login"
                     value={login}
                     onChange={ e=> setLogin(e.target.value)}
+                    required={true}
                  />
                  <div className="input-group">
                      <input 
@@ -75,6 +88,7 @@ export default function Register () {
                         placeholder="Senha"
                         value={senha}
                         onChange={e => setSenha(e.target.value)}
+                        required={true}
                     />
                  </div>
 

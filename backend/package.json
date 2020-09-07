@@ -20,6 +20,8 @@
     "multer-azure-blob-storage": "^1.0.2",
     "mysql": "^2.18.1",
     "pg": "^8.3.3",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^6.3.5",
     "sqlite3": "^4.1.1"
   },
   "devDependencies": {

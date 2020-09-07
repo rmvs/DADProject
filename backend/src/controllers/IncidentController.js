@@ -1,8 +1,4 @@
-const { Pool } = require('pg');
-
-// connection = require('../database/connection');
-
-const pool = require('../database/connection');
+const sequelize = require('../database/connection');
 
 module.exports = {
     //listagem dos incidentes paginada de 5 em 5 incidentes
@@ -19,7 +15,7 @@ module.exports = {
         // .offset((page - 1) * 5)
         // .select(['incidents.*', 'ongs.name', 'ongs.email', 'ongs.whatsapp', 'ongs.city', 'ongs.uf']);
         
-        const { rows } = await pool.query("select * from chamados c inner join user_chamado uc on uc.id = c.userid ")
+        // const { rows } = await pool.query("select * from chamados c inner join user_chamado uc on uc.id = c.userid ")        
 
         var incidents = []
 
@@ -35,36 +31,70 @@ module.exports = {
     },
 
     async create (req, res) {
-        const { title, description, value,file } = req.body;
-        const ong_id = req.headers.authorization;
+        const { titulo, descricao, valor } = req.body;
+        const user_id = req.headers.authorization;
 
-        console.log(req.files)
-        console.log(file)
+        const user = await sequelize.models.Usuario.findByPk(user_id);
+        const pessoa = await user.getPessoa();
+        
+        const chamado = await sequelize.models.Chamado.build({
+            titulo: titulo,
+            descricao: descricao,
+            arrecadado: valor,
+            anexoid: req.files.length > 0 ? req.files[0].blobName : null,
+            fechado: false,
+        });
+        chamado.setPessoa(pessoa)
+        await chamado.save();
 
         // const [id] = await connection('incidents').insert({
         //     title, description, value, ong_id
         // });
 
         // res.json({ id });
-        res.json({'id':0})
+        res.json({'id': chamado.id})
     },
 
     async delete(req, res) {
 
         const { id } = req.params;
-        const ong_id = req.headers.authorization;
+        const idUsuario = req.headers.authorization;
 
-        const incident = await connection('incidents')
-            .where('id', id)
-            .select('ong_id')
-            .first()
+        const usu = await sequelize.models.Usuario.findByPk(idUsuario);
+        const pessoa = await usu.getPessoa();
 
-        if (incident.ong_id != ong_id) {
-            res.status(401).json({'error': 'Operation not permitted.'});
+        const chamado = await sequelize.models.Chamado.findByPk(id);
+        
+        if (chamado.pessoaid != pessoa.id) {
+            res.status(401).json({'error': 'Operação não permitida.'});
         } else {
-            await connection('incidents').where('id', id).delete();
+            await chamado.removeParticipantes(await chamado.getParticipantes());
+            await chamado.destroy();
             res.status(204).send();
         }
 
+    },
+    async join(req, res){
+
+        const { pessoaid, chamadoid } = req.body;
+        const idUsuario = req.headers.authorization;
+
+        const chamado = await sequelize.models.Chamado.findByPk(chamadoid);
+
+        const pessoa = await sequelize.models.Pessoa.findByPk(pessoaid)
+
+        const participantes = await chamado.getParticipantes();
+        const found = participantes.find(s => s.id == pessoaid);
+
+        if(!found){
+            chamado.addParticipante(pessoa);
+        }else{
+            chamado.removeParticipante(pessoa);
+        }
+        
+
+        await chamado.save();
+
+        res.status(200).send();
     }
 };

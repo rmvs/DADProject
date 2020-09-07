@@ -41,16 +41,16 @@ routes.get('/users/:id', (req, res) => {
 
 });
 
-routes.post('/users', (req, res) => {
+// routes.post('/users', (req, res) => {
 
-    const reqbody = req.body;
+//     const reqbody = req.body;
 
-    res.json({
-        res:'You just entered at post users route',
-        body: reqbody
-    });
+//     res.json({
+//         res:'You just entered at post users route',
+//         body: reqbody
+//     });
 
-});
+// });
 
 //Get Ong Route
 routes.get('/ongs', OngController.index);
@@ -63,6 +63,9 @@ routes.get('/incidents', IncidentController.index);
 
 //Create Incident
 routes.post('/incidents',upload.any(), IncidentController.create);
+
+//Join Incident
+routes.post('/incidents/join', IncidentController.join);
 
 //Delete Incident
 routes.delete('/incidents/:id', IncidentController.delete);

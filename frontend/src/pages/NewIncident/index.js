@@ -14,7 +14,7 @@ export default function NewIncident() {
     let [value, setValue] = useState('');
     let [file, setFile] = useState('');
 
-    let ongId = localStorage.getItem('ongId');
+    let id = localStorage.getItem('id');
     let history = useHistory();
 
     async function handleNewIncident (event) {
@@ -29,13 +29,13 @@ export default function NewIncident() {
 
         try {
             const formData = new FormData();
-            formData.append("file",data.file);
-            formData.append("tile",data.title);
-            formData.append("description",data.description);
-            formData.append("value",value)
+            formData.append("arquivo",data.file);
+            formData.append("titulo",data.title);
+            formData.append("descricao",data.description);
+            formData.append("valor",value)
             await api.post('incidents', formData, {
                 headers: {
-                    Authorization: ongId
+                    Authorization: id
                 }
             } );
 

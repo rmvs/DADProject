@@ -1,37 +1,48 @@
-const pool = require('../database/connection');
+const sequelize = require('../database/connection');
 // const crypto = require('crypto');
 const md5 = require('md5');
 
 module.exports = {
     async create(req, res) {
-        const {nome, email, login, senha} = req.body;
-        // const id = crypto.randomBytes(4).toString('HEX');
+        console.log('passou aqui');
+        const {nome, email, login, senha, ongnome } = req.body;
 
-        const { rows } = await pool.query(`select count(*) from user_chamado where login = ${login}`)
-        console.log(rows)
-        if (rows[0] > 0) {
-            return res.json({'status':403})
-        }
+        const user = sequelize.models.Usuario.build({
+            login: login,
+            senha: md5(senha),
+            Pessoa:{
+                nome: nome,
+                email: email,
+                ongnome: ongnome
+            }
+        },{
+            include: [sequelize.models.Pessoa]
+        });
 
-        const result = await pool.query(`insert into user_chamado (login,senha) values(${login},${md5(senha)})`)
-        console.log(result)
+        await user.save();
 
-        return res.json({'status':200, 'id': result.rows[0].id});
+        return res.json({'status':200, 'id': user.id});
     },
     async login(req,res) {
         const { login,senha } = req.body;
-        const { rows } = await pool.query(`select p.id,u.login as user,u.senha as pass,p.nome,p.email from usuario u inner join pessoa p on p.userid = u.id  where login = '${login}'`)
-        if(rows.length == 0){
+        const user = await sequelize.models.Usuario.findOne({
+            where: {
+                login: login
+            }
+        })
+        if(!user){
             return res.status(403);
         }
-        const { id,user,pass,nome,email } = rows[0]
 
-        if(md5(senha) != pass){
+
+        if(md5(senha) != user.senha){
             console.log('senha ou usuario invalido')
             return res.status(200).json({'erro': 'senha inválida'})
         }
+
+        const pessoa = await user.getPessoa();
         
-        return res.json({'status':200, 'id': id, 'nome': nome, 'email': email});
+        return res.json({'status':200, 'id': user.id,'pessoaid':pessoa.id , 'nome': pessoa.nome, 'email': pessoa.email});
     }
 
 };
