@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import './styles.css';
 import logoImg from "../../assets/logo.svg";
+import petLogo from "../../assets/PET.png";
 import { Link, useHistory } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
 
@@ -50,9 +51,9 @@ export default function NewIncident() {
         <div className="new-incident-container">
          <div className="content">
              <section>
-                <img src={logoImg} alt="Be The Hero"/>
+                <img src={petLogo} alt="Be The Hero"/>
                 <h1>Cadastrar novo chamado</h1>
-                <p>Descreva o chamado detalhadamente. Você pode anexar um print.</p>
+                <p>Descreva o chamado detalhadamente. Você pode anexar um arquivo de qualquer formato.</p>
                 <Link className="back-link" to="/profile">
                     <FiArrowLeft size={16} color="#E02041" />
                     Voltar para Home
