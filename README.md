@@ -32,7 +32,7 @@ Além disso o sistema faz acesso ao banco de dados através de um drive de banco
 ## Demo
 
 - Aplicação\
-http://137.117.85.184/
+http://20.185.237.27/
 
 - Servidor de banco de dados e backend REST\
-http://104.45.148.219/
+http://13.72.77.48/
