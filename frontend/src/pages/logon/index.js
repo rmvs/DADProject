@@ -17,8 +17,6 @@ export default function Logon () {
     const history = useHistory();
 
     async function handleLogin (event) {
-        history.push('/profile');
-        return
         event.preventDefault();
         try {
             let response = await api.post('users/login', {login, senha});
