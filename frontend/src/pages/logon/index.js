@@ -43,7 +43,7 @@ export default function Logon () {
         <div className="logon-container">
             <section className="form">                           
                 <form onSubmit={handleLogin}>  
-                <img src={petLogo} alt="Be the Hero" style={{'max-width':'50%'}}/>               
+                <img src={petLogo} alt="Be the Hero" style={{'maxWidth':'50%'}}/>               
                     <h1>Faça seu login</h1>
 
                     <input 
