@@ -159,13 +159,13 @@ export default function Profile () {
                                         if(incident.autor.id != k){
                                             if(!incident.participa){
                                                 return (
-                                                    <button onClick={() => handleJoinIncident(incident)} type='button' style={{right:'50px'}}>
+                                                    <button onClick={() => handleJoinIncident(incident)} type='button' style={{right:'20px'}}>
                                                         <FiUserPlus size={20} color="#a8a8b3" />
                                                     </button>
                                                 );
                                             }else{
                                                 return (
-                                                    <button onClick={() => handleJoinIncident(incident)} type='button' style={{right:'50px'}}>
+                                                    <button onClick={() => handleJoinIncident(incident)} type='button' style={{right:'20px'}}>
                                                         <FiUserMinus size={20} color="#a8a8b3" />
                                                     </button>
                                                 )
