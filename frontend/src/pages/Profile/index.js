@@ -117,15 +117,19 @@ export default function Profile () {
                             <li key={incident.id}>
 
                                 {/* <img src={"https://dadbackendcontainer.blob.core.windows.net/container0/" + incident.fotoid} style={{'maxWidth':'25%'}} /> */}
-                                <div style={{'position':'absolute','right':'25px'}}>
-                                <ReactRoundedImage
-                                        image={"https://dadbackendcontainer.blob.core.windows.net/container0/" + incident.fotoid}
-                                        roundedColor="#321124"
-                                        imageWidth="150"
-                                        imageHeight="150"
-                                        roundedSize="13"                                        
-                                />
-                                </div>
+                                {
+                                    incident.fotoid ?
+                                    <div style={{'position':'absolute','right':'25px'}}>
+                                    <ReactRoundedImage
+                                            image={"https://dadbackendcontainer.blob.core.windows.net/container0/" + incident.fotoid}
+                                            roundedColor="#321124"
+                                            imageWidth="150"
+                                            imageHeight="150"
+                                            roundedSize="13"                                        
+                                    />
+                                    </div>
+                                    : ""
+                                }                                
                                 
 
                                 <strong>CASO :</strong>
