@@ -132,7 +132,7 @@ export default function Profile () {
                                 <p>{incident.titulo}</p>    
 
                                 <strong>DESCRIÇÃO</strong>
-                                <p>{incident.descricao}</p>
+                                <p style={{'width':'70%'}}>{incident.descricao}</p>
 
                                 <strong>NOME ONG</strong>
                                 <p>{incident.autor.ongnome}</p> 
