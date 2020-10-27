@@ -39,6 +39,14 @@ export default function Logon () {
         }
     }
 
+    async function verifySession(){
+        if (localStorage.getItem('email') != null){
+            history.push('/profile');
+        }
+    }
+
+    verifySession();
+
     return(
         <div className="logon-container">
             <section className="form">                           
