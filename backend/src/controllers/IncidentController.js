@@ -36,16 +36,20 @@ module.exports = {
 
         const user = await sequelize.models.Usuario.findByPk(user_id);
         const pessoa = await user.getPessoa();
-        
-        const chamado = await sequelize.models.Chamado.build({
+
+        const foto = req.files.filter(s=> s.fieldname == 'foto')[0];
+        const arquivo = req.files.filter(s=>s.fieldname == 'arquivo')[0];
+        const chamado = await sequelize.models.Chamado.create({
             titulo: titulo,
             descricao: descricao,
-            arrecadado: valor,
-            anexoid: req.files.length > 0 ? req.files[0].blobName : null,
+            arrecadado: valor ? valor : null,
+            anexoid: arquivo ? arquivo.blobName : null,
+            fotoid: foto ? foto.blobName : null,
             fechado: false,
+            pessoaid: pessoa.id
         });
-        chamado.setPessoa(pessoa)
-        await chamado.save();
+        // chamado.setPessoa(pessoa);
+        // await chamado.save();
 
         // const [id] = await connection('incidents').insert({
         //     title, description, value, ong_id

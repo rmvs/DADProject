@@ -33,6 +33,7 @@ module.exports = {
                 titulo: s.titulo,
                 descricao: s.descricao,
                 anexoid: s.anexoid,
+                fotoid: s.fotoid,
                 arrecadado: s.arrecadado || 0,
                 fechado: s.fechado || false,
                 participantes: p.length,

@@ -125,6 +125,11 @@ const sequelize = new Sequelize(`postgres://${userDB}:${passwordDB}@${hostDB}:${
                 type: DataTypes.STRING,
                 allowNull: true                
             },
+            fotoid: {
+                field: 'fotoid',
+                type: DataTypes.STRING,
+                allowNull: true                
+            },
             arrecadado: {
                 field: 'arrecadado',
                 type: DataTypes.REAL,
@@ -199,10 +204,10 @@ const sequelize = new Sequelize(`postgres://${userDB}:${passwordDB}@${hostDB}:${
 
         sequelize.models.Chamado.belongsToMany(sequelize.models.Pessoa,{
             through: sequelize.models.ChamadoParticipantes,
-            as: 'Participantes'
+            as: 'Participantes',
+            foreignKey: 'pessoaid'
         });
 
-        console.log('models created')
         // const elano = await sequelize.models.Usuario.findOne({
         //     where: {
         //         login: 'elano'

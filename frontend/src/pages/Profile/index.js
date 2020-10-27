@@ -7,6 +7,9 @@ import petLogo from "../../assets/PET.png";
 import './style.css';
 import api from '../../services/api';
 import Parser from 'html-react-parser';
+import { css } from "@emotion/core";
+import ClipLoader from "react-spinners/ClipLoader";
+import ReactRoundedImage from "react-rounded-image";
 
 export default function Profile () {
     let [incidents, setIncidents] = useState([]);
@@ -15,7 +18,9 @@ export default function Profile () {
     let nome  = localStorage.getItem('nome');
     let email = localStorage.getItem('email');
     let pessoaid = localStorage.getItem('pessoaid');
-    let id = localStorage.getItem('id')
+    let id = localStorage.getItem('id');
+
+    let [isLoading, setIsLoading] = useState(false);
 
 
     useEffect( () => {
@@ -24,8 +29,8 @@ export default function Profile () {
                 Authorization: id
             }
         }).then(response => {
-            console.log(response.data)
             setIncidents(response.data);
+            setIsLoading(true)
         });
     }, [id]);
 
@@ -76,6 +81,12 @@ export default function Profile () {
         history.push('/');
     }
 
+    const override = css`
+                    display: block;
+                    margin: 0 auto;
+                    border-color: red;
+                `;
+
     return (
         <div className="profile-container">
             <header>
@@ -88,10 +99,16 @@ export default function Profile () {
             </header>
 
             <h1>Chamados Cadastrados</h1>
-
-            {
-                incidents.length == 0 ? Parser("<strong>Nenhum chamado foi cadastrado ainda</strong>") : ""
+            { 
+                isLoading && incidents.length == 0 ? Parser("<strong>Nenhum chamado foi cadastrado ainda</strong>") : ""
             }
+
+            <ClipLoader
+                    css={override}
+                    size={150}
+                    color={"#123abc"}
+                    loading={!isLoading && incidents.length == 0}
+            />
 
             <ul>
                 {
@@ -99,14 +116,26 @@ export default function Profile () {
                         return (
                             <li key={incident.id}>
 
-                                <strong>NOME ONG</strong>
-                                <p>{incident.autor.ongnome}</p>
+                                {/* <img src={"https://dadbackendcontainer.blob.core.windows.net/container0/" + incident.fotoid} style={{'maxWidth':'25%'}} /> */}
+                                <div style={{'position':'absolute','right':'25px'}}>
+                                <ReactRoundedImage
+                                        image={"https://dadbackendcontainer.blob.core.windows.net/container0/" + incident.fotoid}
+                                        roundedColor="#321124"
+                                        imageWidth="150"
+                                        imageHeight="150"
+                                        roundedSize="13"                                        
+                                />
+                                </div>
+                                
 
                                 <strong>CASO :</strong>
-                                <p>{incident.titulo}</p>
+                                <p>{incident.titulo}</p>    
 
                                 <strong>DESCRIÇÃO</strong>
                                 <p>{incident.descricao}</p>
+
+                                <strong>NOME ONG</strong>
+                                <p>{incident.autor.ongnome}</p> 
 
                                 <strong>PARTICIPANTES</strong>
                                 <p>{incident.participantes}</p> 
@@ -115,7 +144,7 @@ export default function Profile () {
                                     incident.anexoid ?
                                     <React.Fragment>
                                     <strong>DOCUMENTO/ANEXO</strong>
-                                    <p>Clique <a target="_blank" href={"https://vmdad2020groupdiag.blob.core.windows.net/documentos/" + incident.anexoid}>aqui</a> para visualizar.</p>
+                                    <p>Clique <a target="_blank" href={"https://dadbackendcontainer.blob.core.windows.net/container0/" + incident.anexoid}>aqui</a> para visualizar.</p>
                                     </React.Fragment> : ""
                                 }
 
